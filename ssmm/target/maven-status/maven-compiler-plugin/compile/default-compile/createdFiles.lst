@@ -1,6 +1,0 @@
-TestMaven.class
-cn\justxzm\service\UserService.class
-cn\justxzm\web\UserController.class
-cn\justxzm\dao\UserDao.class
-cn\justxzm\mapper\UserMapper.class
-cn\justxzm\model\User.class
