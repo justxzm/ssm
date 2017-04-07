@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rpc/rpc.iml" filepath="$PROJECT_DIR$/rpc/rpc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ssmm0.iml" filepath="$PROJECT_DIR$/ssmm0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cache/ssmm0-cache.iml" filepath="$PROJECT_DIR$/cache/ssmm0-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data/ssmm0-data.iml" filepath="$PROJECT_DIR$/data/ssmm0-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ssmm/ssmm0-ssmm.iml" filepath="$PROJECT_DIR$/ssmm/ssmm0-ssmm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/userManagement/ssmm0-userManagement.iml" filepath="$PROJECT_DIR$/userManagement/ssmm0-userManagement.iml" />
+    </modules>
+  </component>
+</project>
