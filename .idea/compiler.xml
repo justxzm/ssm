@@ -25,7 +25,10 @@
         <module name="common" />
         <module name="rpc" />
         <module name="ssmm0-cache" />
+        <module name="ssmm0-common" />
         <module name="ssmm0-data" />
+        <module name="ssmm0-rpc" />
+        <module name="ssmm0-rpcWeb" />
         <module name="ssmm0-userManagement" />
       </profile>
     </annotationProcessing>
@@ -36,6 +39,8 @@
       <module name="ssmm0-cache" target="1.8" />
       <module name="ssmm0-common" target="1.8" />
       <module name="ssmm0-data" target="1.8" />
+      <module name="ssmm0-rpc" target="1.8" />
+      <module name="ssmm0-rpcWeb" target="1.8" />
       <module name="ssmm0-ssmm" target="1.8" />
       <module name="ssmm0-userManagement" target="1.8" />
     </bytecodeTargetLevel>

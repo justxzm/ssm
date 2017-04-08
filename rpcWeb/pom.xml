@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>ssmm0</artifactId>
+        <groupId>cn.justxzm</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>cn.justxzm.ssmm0</groupId>
+    <artifactId>ssmm0-rpcWeb</artifactId>
+    <name>ssmm0-rpcWeb</name>
+    <packaging>war</packaging><!-- 需要部署的模块 -->
+
+    <!-- 引入实际依赖 -->
+    <dependencies>
+        <!-- 将ssmm0-data项目作为一个jar引入项目中 -->
+        <dependency>
+            <groupId>cn.justxzm.ssmm0</groupId>
+            <artifactId>ssmm0-data</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- spring mvc(如果没有web.xml中的CharacterEncodingFilter找不到) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

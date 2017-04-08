@@ -92,7 +92,7 @@ public class AdminService {
                 limit);
         List<Admin> adminList = null;
         try {
-            System.out.println(cacheKey);
+            //System.out.println(cacheKey);
             adminList = adminsCache.get(cacheKey);
         } catch (ExecutionException e) {
             e.printStackTrace();

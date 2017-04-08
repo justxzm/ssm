@@ -104,7 +104,7 @@ public class ActiveMQP2PUtil {
         }
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         sendMessage("hello world3");
-    }*/
+    }
 }

@@ -36,7 +36,7 @@
             这样的话，比如说有两个项目com.xxx.mapper.user和com.xxx.mapper.hotel，value只需写作com.xxx.mapper即可
             否则，value就要写作com.xxx.user.mapper,com.xxx.hotel.mapper
          -->
-        <property name="basePackage" value="cn.justxzm.mapper.userManagement" />
+        <property name="basePackage" value="cn.justxzm.mapper" />
         <property name="sqlSessionFactoryBeanName" value="SqlSessionFactory" />
     </bean>
 

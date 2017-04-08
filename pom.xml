@@ -12,13 +12,16 @@
     <packaging>pom</packaging>
 
 
+    <!-- 管理子模块 -->
     <modules>
         <module>ssmm</module>
-        <module>data</module>
+        <module>common</module><!-- 通用类模块 -->
+        <module>cache</module><!-- 缓存模块 -->
+        <module>rpc</module><!-- rpc模块 -->
+        <module>data</module><!-- 封装数据操作 -->
         <module>userManagement</module>
-        <module>cache</module>
-        <module>common</module>
-        <module>rpc</module>
+        <module>rpcWeb</module><!-- 具体业务1-人员管理系统，这里的userManagement部署在serverA上（配合rpcWeb测试rpc） -->
+        <!-- 具体业务2-用于测试RPC的另一台机器，这里的rpcWeb项目部署在serverB上 -->
     </modules>
 
     <properties>
