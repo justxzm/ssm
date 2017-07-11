@@ -7,6 +7,7 @@ package cn.justxzm.web.admin;
 import cn.justxzm.model.userManagement.Admin;
 import cn.justxzm.service.userManagement.AdminService;
 import cn.justxzm.util.admin.AdminCookieUtil;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * adminController
@@ -41,8 +43,7 @@ public class AdminController {
         admin.setUsername(username);
         admin.setPassword(password);
 
-        //boolean isRegisterSuccess = adminService.register(admin);
-        boolean isRegisterSuccess = adminService.register_RPC(admin);
+        boolean isRegisterSuccess = adminService.register(admin);
         return isRegisterSuccess;
     }
 
@@ -53,7 +54,7 @@ public class AdminController {
     public ModelAndView login(@RequestParam("username") String username,
                               @RequestParam("password") String password,
                               HttpServletResponse response) {
-        Admin admin = adminService.login(username, password);
+        /*Admin admin = adminService.login(username, password);
 
         ModelAndView modelAndView = new ModelAndView();
         if (admin == null) {
@@ -63,8 +64,18 @@ public class AdminController {
             modelAndView.addObject("admin", admin);
             modelAndView.setViewName("userinfo");
             AdminCookieUtil.addLoginCookie(admin, response);
-        }
+        }*/
 
+        Optional<Admin> admin = Optional.ofNullable(adminService.login(username, password));
+        ModelAndView modelAndView = new ModelAndView();
+        if(admin.isPresent()) {
+            modelAndView.addObject("admin", admin.get());
+            modelAndView.setViewName("userinfo");
+            AdminCookieUtil.addLoginCookie(admin.get(), response);
+        }else{
+            modelAndView.addObject("message", "用户不存在或者密码错误！请重新输入");
+            modelAndView.setViewName("error");
+        }
         return modelAndView;
     }
     /*****************************mybatis xml方式解决的问题*******************************/
@@ -78,8 +89,9 @@ public class AdminController {
                                  @RequestParam("start") int start,
                                  @RequestParam("limit") int limit,
                                  HttpServletRequest request){
-        Admin admin = AdminCookieUtil.getLoginCookie(request);
-        if(admin == null){//未登录
+
+        Optional<Admin> admin = Optional.ofNullable(AdminCookieUtil.getLoginCookie(request));
+        if(!admin.isPresent()){//未登录
             return null;
         }
         List<Admin> adminList = adminService.findAdmin(username, password, start, limit);
@@ -155,5 +167,19 @@ public class AdminController {
     public Admin findAdminByIdFromRedisHash(@RequestParam(value="id") int id){
 
         return adminService.findAdminByIdFromRedisHash(id);
+    }
+
+
+    /*************************rpcProduct******************************/
+    @ResponseBody
+    @RequestMapping("/rpcProduct")
+    public boolean rpcProduct(@RequestParam("username") String username,
+                            @RequestParam("password") String password) {
+        Admin admin = new Admin();
+        admin.setUsername(username);
+        admin.setPassword(password);
+
+        boolean isRegisterSuccess = adminService.register_RPC(admin);
+        return isRegisterSuccess;
     }
 }

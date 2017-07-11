@@ -16,6 +16,23 @@ import redis.clients.jedis.ShardedJedis;
  * hash缓存操作类
  */
 public class RedisHashUtil extends RedisBaseUtil {
+    /***************************设置缓存过期时间***********************/
+    public static void hexpire(String key, int time) {
+        boolean broken = false;//标记：该操作是否被异常打断而没有正常结束
+        ShardedJedis jedis = null;
+        try {
+            jedis = getJedis();//获取jedis实例
+            if (jedis == null) {
+                broken = true;
+                return;
+            }
+            jedis.expire(key, time);
+        } catch (Exception e) {
+            broken = true;
+        } finally {
+            returnJedis(jedis, broken);
+        }
+    }
     /***************************添加缓存*****************************/
     /**
      * 添加单个缓存key-value到map中
@@ -85,7 +102,7 @@ public class RedisHashUtil extends RedisBaseUtil {
     /**
      * 获取map中key的集合
      *
-     * @param set
+     * @param
      */
     public static Set<String> hkeys(String map) {
         boolean broken = false;//标记：该操作是否被异常打断而没有正常结束

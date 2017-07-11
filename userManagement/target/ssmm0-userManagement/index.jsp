@@ -23,7 +23,7 @@
             alert("insertAdminWithBackId")
             $.ajax({
                 type: "post",
-                url: "${pageContext.request.contextPath }admin/insert",
+                url: "${pageContext.request.contextPath }/admin/insert",
                 contentType: 'application/json;charset=utf-8',
                 data: '{"username":"admin","password":"123456"}',
                 success: function (json) {
@@ -64,7 +64,7 @@
             $.ajax({
                 type: "post",
                 url: "${pageContext.request.contextPath }/admin/findAdminById",
-                data: 'id=13',
+                data: 'id=1',
                 success: function (json) {
                     alert(json.id + "," + json.username+","+json.password);
                 }
@@ -75,7 +75,7 @@
             $.ajax({
                 type: "post",
                 url: "${pageContext.request.contextPath }/admin/findAdminByIdFromRedis",
-                data: 'id=14',
+                data: 'id=2',
                 success: function (json) {
                     alert(json.id + "," + json.username+","+json.password);
                 }
@@ -86,7 +86,7 @@
             $.ajax({
                 type: "post",
                 url: "${pageContext.request.contextPath }/admin/findAdminByIdFromRedisHash",
-                data: 'id=14',
+                data: 'id=2',
                 success: function (json) {
                     alert(json.id + "," + json.username+","+json.password);
                 }
@@ -111,6 +111,11 @@
 <input type="button" onclick="findAdminList()" value="findAdminList(guava cache)">
 <input type="button" onclick="findAdminById()" value="findAdminById(memcached cache)"><br><br>
 <input type="button" onclick="findAdminByIdFromRedis()" value="findAdminByIdFromRedis">
-<input type="button" onclick="findAdminByIdFromRedisHash()" value="findAdminByIdFromRedisHash">
+<input type="button" onclick="findAdminByIdFromRedisHash()" value="findAdminByIdFromRedisHash"><br><br>
+<form method="post" action="admin/rpcProduct">
+    <input name="username" type="text" value="rpcName" hidden>
+    <input name="password" type="password" value="rpcPassword" hidden>
+    <input type="submit" value="注册(rpc)">
+</form>
 </body>
 </html>

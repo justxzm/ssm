@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 @ContextConfiguration({"classpath*:/spring.xml"})
 public class guava_test {
-    /*************************guava cache单元测试******************************/
+    /*************************guava cache单元测试********************************/
     /*************************不启动服务器本地缓存无效******************************/
     @Autowired
     private AdminController adminController;
@@ -45,6 +45,8 @@ public class guava_test {
         for(Admin admin:adminList){
             System.out.println(admin.getId()+","+admin.getUsername()+","+admin.getPassword());
         }
+        List<Admin> adminList2=adminController.findAdminByUserName("admin");
+        System.out.println(adminList==adminList2);
     }
     @Test
     public void findAdminList_Test() throws Exception {
@@ -52,5 +54,7 @@ public class guava_test {
         for(Admin admin:adminList){
             System.out.println(admin.getId()+","+admin.getUsername()+","+admin.getPassword());
         }
+        List<Admin> adminList2=adminController.findAdminList("admin","123456",0,2);
+        System.out.println(adminList==adminList2);
     }
 }

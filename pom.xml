@@ -36,7 +36,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.5</version>
+                <version>1.5.11</version>
             </dependency>
             <!-- json -->
             <dependency>
@@ -299,7 +299,7 @@
                     3）将jdbc.properties放在ssmm0-data项目中，之后需要将ssmm0-data项目的env配置为dev
                 -->
                 <jdbc.url>
-                    <![CDATA[jdbc:mysql://127.0.0.1:3306/mybatis?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
+                    <![CDATA[jdbc:mysql://127.0.0.1:3306/ssm?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>jianchi</jdbc.password>
 

@@ -9,6 +9,7 @@ import cn.justxzm.dao.userManagement.AdminDao;
 import cn.justxzm.model.log.Log;
 import cn.justxzm.model.userManagement.Admin;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +17,7 @@ import cn.justxzm.rpc.mq.util.ActiveMQP2PUtil;
 import cn.justxzm.util.DateUtil;
 import cn.justxzm.vo.userManagement.AdminCacheKey;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -115,22 +117,22 @@ public class AdminService {
     /*********************memcached********************/
     public Admin findAdminById(int id) {
         //从缓存中获取数据
-        Admin admin = (Admin) MemcachedUtil.getCache(CachePrefix.USER_MANAGEMENT, String.valueOf(id));
+        Optional<Admin> admin =Optional.ofNullable((Admin)MemcachedUtil.getCache(CachePrefix.USER_MANAGEMENT, String.valueOf(id)));
         //若缓存中有，直接返回
-        if(admin != null){
+        if(admin.isPresent()){
             System.out.println("memcached缓存存在");
-            return admin;
+            return admin.get();
         }
         //若缓存中没有，从数据库查询
-        admin = adminDao.getUserById(id);
+        admin = Optional.ofNullable(adminDao.getUserById(id));
         //若查询出的数据不为null
-        if(admin!=null){
+        if(admin.isPresent()){
             //将数据存入缓存
-            MemcachedUtil.setCacheWithNoReply(CachePrefix.USER_MANAGEMENT, String.valueOf(id), admin);
+            MemcachedUtil.setCacheWithNoReply(CachePrefix.USER_MANAGEMENT, String.valueOf(id), admin.get());
             System.out.println("成功存入memcached缓存");
         }
         //返回从数据库查询的admin（当然也可能数据库中也没有，就是null）
-        return admin;
+        return admin.orElse(null);
     }
 
     /*********************redis********************/
@@ -143,16 +145,20 @@ public class AdminService {
             return Admin.parseJsonToAdmin(adminStr);
         }
         //若缓存中没有，从数据库查询
-        Admin admin = adminDao.getUserById(id);
+        Optional<Admin> admin = Optional.ofNullable(adminDao.getUserById(id));
         //若查询出的数据不为null
-        if(admin!=null){
+        if(admin.isPresent()){
             //将数据存入缓存
-            RedisStringUtil.set(CachePrefix.USER_MANAGEMENT, String.valueOf(id),admin.toJson());
+            RedisStringUtil.set(CachePrefix.USER_MANAGEMENT, String.valueOf(id),admin.get().toJson());
+            RedisStringUtil.setExpire(CachePrefix.USER_MANAGEMENT, String.valueOf(id),10);
+            //设置缓存过期时间
+            //RedisStringUtil.setex(CachePrefix.USER_MANAGEMENT, String.valueOf(id),admin.toJson(),10);
             System.out.println("成功存入redis缓存");
         }
         //返回从数据库查询的admin（当然也可能数据库中也没有，就是null）
-        return admin;
+        return admin.orElse(null);
     }
+
     /*********************redis hash********************/
     /*
      * 此处用set、list、sorted set都不太好，因为三者都不具备根据key查找值的能力，
@@ -174,15 +180,25 @@ public class AdminService {
             return Admin.parseJsonToAdmin(adminStr);
         }
         //若缓存中没有，从数据库查询
-        Admin admin = adminDao.getUserById(id);
+        Optional<Admin> admin = Optional.ofNullable(adminDao.getUserById(id));
         //若查询出的数据不为null
-        if(admin!=null){
+        if(admin.isPresent()){
             //将数据存入缓存
-            RedisHashUtil.hset(String.valueOf(RedisCacheConstant.USER_MANAGEMENT_MAP), String.valueOf(id), admin.toJson());
+            RedisHashUtil.hset(String.valueOf(RedisCacheConstant.USER_MANAGEMENT_MAP), String.valueOf(id), admin.get().toJson());
+            //设置缓存过期时间
+            RedisHashUtil.hexpire(String.valueOf(RedisCacheConstant.USER_MANAGEMENT_MAP),10);
+            /*new Thread(()->{
+                try {
+                    Thread.sleep(10000);
+                    RedisHashUtil.hdel(String.valueOf(RedisCacheConstant.USER_MANAGEMENT_MAP), String.valueOf(id));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();*/
             System.out.println("成功存入redis缓存");
         }
         //返回从数据库查询的admin（当然也可能数据库中也没有，就是null）
-        return admin;
+        return admin.orElse(null);
     }
 
     /**
