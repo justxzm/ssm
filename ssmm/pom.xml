@@ -15,7 +15,7 @@
     <artifactId>ssmm0-ssmm</artifactId>
     
     <name>ssmm0-ssmm</name>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
 
     <!-- 引入实际依赖 -->
